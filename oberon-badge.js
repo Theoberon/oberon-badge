@@ -4,7 +4,7 @@
 
   var CONFIG = {
     url: "https://oberonportfolio.netlify.app/",
-    label: "View My Work",
+    label: "Want sites like this?",
     accent: "#FF5A1F",
     ink: "#17171A",
     cream: "#EDEAE3",
