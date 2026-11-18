@@ -1,22 +1,4 @@
-/*!
- * Oberon floating badge widget
- * -----------------------------------------------------------------------
- * Drop this on any site with:
- *   <script src="oberon-badge.js" defer></script>
- * (works from anywhere in <head> or <body> — it waits for the DOM itself)
- *
- * Behavior:
- *   - Sits fixed in the bottom-right corner.
- *   - Expands to a pill for 2s when the page first loads, then auto-collapses
- *     to a 48px circle.
- *   - Expands again on hover; collapses on mouse-out.
- *   - Click anywhere on it opens the portfolio in a new tab.
- *
- * Everything you'd want to tweak per-site lives in CONFIG below.
- * Isolated in a Shadow DOM, so it can't clash with — or be broken by —
- * the host page's own CSS.
- * -----------------------------------------------------------------------
- */
+
 (function () {
   "use strict";
 
