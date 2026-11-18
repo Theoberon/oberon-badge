@@ -32,14 +32,17 @@
       + "text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,0.28);cursor:pointer;"
       + "z-index:" + CONFIG.zIndex + ";transition:width .35s cubic-bezier(.4,0,.2,1);"
       + "font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}"
-      + ".badge.expanded{width:196px;}"
+      // expanded width is measured from the label text (see measure() below);
+      // 196px is only a fallback. max-width keeps it on-screen on narrow phones.
+      + ".badge.expanded{width:var(--expanded-w,196px);max-width:calc(100vw - " + (CONFIG.offset * 2) + "px);}"
       + ".icon{flex:0 0 " + CONFIG.size + "px;width:" + CONFIG.size + "px;height:" + CONFIG.size + "px;"
       + "border-radius:50%;background:" + CONFIG.accent + ";display:flex;align-items:center;justify-content:center;}"
       + ".icon svg{width:" + Math.round(CONFIG.size * 0.83) + "px;height:" + Math.round(CONFIG.size * 0.83) + "px;display:block;}"
       + ".label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:" + CONFIG.cream + ";"
-      + "white-space:nowrap;margin-left:10px;opacity:0;transition:opacity .2s ease;}"
+      + "white-space:nowrap;margin-left:10px;min-width:0;overflow:hidden;text-overflow:ellipsis;"
+      + "opacity:0;transition:opacity .2s ease;}"
       + ".badge.expanded .label{opacity:1;}"
-      + ".arrow{color:" + CONFIG.accent + ";font-size:15px;margin-left:8px;margin-right:16px;"
+      + ".arrow{flex:none;color:" + CONFIG.accent + ";font-size:15px;margin-left:8px;margin-right:16px;"
       + "white-space:nowrap;opacity:0;transition:opacity .2s ease;}"
       + ".badge.expanded .arrow{opacity:1;}"
       + "@media (prefers-reduced-motion: reduce){.badge{transition:none}.label,.arrow{transition:none}}";
@@ -61,10 +64,21 @@
       +     '<text x="28" y="31.5" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-weight="700" font-size="10" fill="' + CONFIG.ink + '">&gt;_</text>'
       +   '</svg>'
       + '</span>'
-      + '<span class="label">' + CONFIG.label + '</span>'
+      + '<span class="label"></span>'
       + '<span class="arrow">&#8599;</span>';
+    badge.querySelector(".label").textContent = CONFIG.label; // text only, so &, < etc. in the label are safe
 
     shadow.appendChild(badge);
+
+    // Size the expanded pill to fit whatever label text is configured.
+    function measure() {
+      var label = badge.querySelector(".label");
+      var arrow = badge.querySelector(".arrow");
+      var w = CONFIG.size + 10 + Math.ceil(label.scrollWidth) + 8 + Math.ceil(arrow.offsetWidth) + 16;
+      badge.style.setProperty("--expanded-w", w + "px");
+    }
+    measure();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
 
     var hovering = false;
     var collapseTimer = null;
