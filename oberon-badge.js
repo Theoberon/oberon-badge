@@ -42,10 +42,12 @@
       + "white-space:nowrap;margin-left:10px;min-width:0;overflow:hidden;text-overflow:ellipsis;"
       + "opacity:0;transition:opacity .2s ease;}"
       + ".badge.expanded .label{opacity:1;}"
-      + ".arrow{flex:none;color:" + CONFIG.accent + ";font-size:15px;margin-left:8px;margin-right:16px;"
-      + "white-space:nowrap;opacity:0;transition:opacity .2s ease;}"
-      + ".badge.expanded .arrow{opacity:1;}"
-      + "@media (prefers-reduced-motion: reduce){.badge{transition:none}.label,.arrow{transition:none}}";
+      + ".rocket{flex:none;width:18px;height:18px;margin-left:8px;margin-right:16px;display:flex;"
+      + "align-items:center;justify-content:center;opacity:0;transition:opacity .2s ease;}"
+      + ".rocket svg{width:18px;height:18px;display:block;transform:rotate(45deg);transition:transform .25s ease;}"
+      + ".badge.expanded .rocket{opacity:1;}"
+      + ".badge:hover .rocket svg{transform:rotate(45deg) translateY(-2px);}"
+      + "@media (prefers-reduced-motion: reduce){.badge{transition:none}.label,.rocket,.rocket svg{transition:none}}";
 
     var style = document.createElement("style");
     style.textContent = css;
@@ -65,7 +67,14 @@
       +   '</svg>'
       + '</span>'
       + '<span class="label"></span>'
-      + '<span class="arrow">&#8599;</span>';
+      + '<span class="rocket" aria-hidden="true">'
+      +   '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">'
+      +     '<path d="M12 2c3.500 3 4.500 7.500 4 12H8c-.5-4.500.5-9 4-12z" fill="' + CONFIG.accent + '"/>'
+      +     '<path d="M8 11.500 4.500 15.500V18L8.500 15.500zM16 11.500l3.500 4V18l-4-2.500z" fill="' + CONFIG.accent + '"/>'
+      +     '<circle cx="12" cy="9" r="1.900" fill="' + CONFIG.ink + '"/>'
+      +     '<path d="M10 15.500c0 3 1 4.500 2 6.500 1-2 2-3.500 2-6.500z" fill="' + CONFIG.cream + '"/>'
+      +   '</svg>'
+      + '</span>';
     badge.querySelector(".label").textContent = CONFIG.label; // text only, so &, < etc. in the label are safe
 
     shadow.appendChild(badge);
@@ -73,8 +82,14 @@
     // Size the expanded pill to fit whatever label text is configured.
     function measure() {
       var label = badge.querySelector(".label");
-      var arrow = badge.querySelector(".arrow");
-      var w = CONFIG.size + 10 + Math.ceil(label.scrollWidth) + 8 + Math.ceil(arrow.offsetWidth) + 16;
+      var rocket = badge.querySelector(".rocket");
+      // measure the label at its natural width (fractional px), not the shrunk collapsed box
+      label.style.flex = "none";
+      label.style.overflow = "visible";
+      var labelW = label.getBoundingClientRect().width;
+      label.style.flex = "";
+      label.style.overflow = "";
+      var w = CONFIG.size + 10 + Math.ceil(labelW) + 2 + 8 + Math.ceil(rocket.offsetWidth) + 16;
       badge.style.setProperty("--expanded-w", w + "px");
     }
     measure();
