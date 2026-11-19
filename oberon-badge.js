@@ -1,4 +1,3 @@
-
 (function () {
   "use strict";
 
@@ -35,9 +34,8 @@
       // expanded width is measured from the label text (see measure() below);
       // 196px is only a fallback. max-width keeps it on-screen on narrow phones.
       + ".badge.expanded{width:var(--expanded-w,196px);max-width:calc(100vw - " + (CONFIG.offset * 2) + "px);}"
-      + ".icon{flex:0 0 " + CONFIG.size + "px;width:" + CONFIG.size + "px;height:" + CONFIG.size + "px;"
-      + "border-radius:50%;background:" + CONFIG.accent + ";display:flex;align-items:center;justify-content:center;}"
-      + ".icon svg{width:" + Math.round(CONFIG.size * 0.83) + "px;height:" + Math.round(CONFIG.size * 0.83) + "px;display:block;}"
+      + ".icon{flex:0 0 " + CONFIG.size + "px;width:" + CONFIG.size + "px;height:" + CONFIG.size + "px;display:flex;}"
+      + ".icon svg{width:" + CONFIG.size + "px;height:" + CONFIG.size + "px;display:block;}"
       + ".label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:" + CONFIG.cream + ";"
       + "white-space:nowrap;margin-left:10px;min-width:0;overflow:hidden;text-overflow:ellipsis;"
       + "opacity:0;transition:opacity .2s ease;}"
@@ -61,9 +59,10 @@
     badge.setAttribute("aria-label", CONFIG.label);
     badge.innerHTML = ""
       + '<span class="icon">'
-      +   '<svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">'
+      +   '<svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'
+      +     '<circle cx="28" cy="28" r="28" fill="' + CONFIG.accent + '"/>'
       +     '<circle cx="28" cy="28" r="15" fill="none" stroke="' + CONFIG.ink + '" stroke-width="3"/>'
-      +     '<text x="28" y="31.5" text-anchor="middle" font-family="ui-monospace,Menlo,Consolas,monospace" font-weight="700" font-size="10" fill="' + CONFIG.ink + '">&gt;_</text>'
+      +     '<path d="M22.8 24.2 28.6 28.3 22.8 32.4M30.8 33.8h5.6" fill="none" stroke="' + CONFIG.ink + '" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>'
       +   '</svg>'
       + '</span>'
       + '<span class="label"></span>'
