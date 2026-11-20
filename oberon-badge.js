@@ -2,14 +2,14 @@
   "use strict";
 
   var CONFIG = {
-    url: "https://oberonportfolio.netlify.app/",
+    url: "https://oberon-dev.vercel.app/",
     label: "Want sites like this?",
     accent: "#FF5A1F",
     ink: "#17171A",
     cream: "#EDEAE3",
     size: 48,          // collapsed circle diameter, px
     offset: 24,        // distance from bottom/right edge, px
-    expandOnLoadMs: 2000,  // how long it stays expanded on page load
+    expandOnLoadMs: 3000,  // how long it stays expanded on page load
     hoverCollapseDelayMs: 150, // grace period before collapsing after mouseleave
     zIndex: 2147483000
   };
